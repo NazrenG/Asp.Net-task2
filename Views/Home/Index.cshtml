@@ -1,4 +1,4 @@
-﻿@model ProductViewModel
+@model ProductViewModel
 
 <style>
     .product-container {
@@ -50,6 +50,7 @@
 <section>
     @foreach (var i in Model.Products)
     {
+        var newPrice = @i.Price - (@i.Price * @i.Discount / 100);
         <section class="product-container">
             <div class="product-image">
                 <img src="@i.ImagePath" alt="Image of @i.Name" />
@@ -57,8 +58,8 @@
             <div class="product-info">
                 <h4>Name: @i.Name</h4>
                 <h4>Description: @i.Description</h4>
-                <h4>Price: @i.Price</h4>
-                <h4>Discount: @i.Discount</h4>
+				<h4>Price: @newPrice.ToString("0.00")$</h4>
+                <h4>Discount: @i.Discount% <span style="text-decoration:line-through;color:red"> @i.Price$ </span></h4>
                 <div class="product-actions">
                     <a asp-route-id="@i.Id" asp-controller="Home" asp-action="Update">Update</a>
                     <a asp-route-id="@i.Id" asp-controller="Home" asp-action="Delete">Delete</a>
